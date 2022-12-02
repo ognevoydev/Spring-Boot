@@ -25,8 +25,6 @@ databaseChangeLog:
               - column:
                   name: price
                   type: int
-                  constraints:
-                    nullable: false
               - column:
                   name: used
                   type: boolean
@@ -45,10 +43,6 @@ databaseChangeLog:
               - column:
                   name: updated_at
                   type: timestamp
-                  constraints:
-                    nullable: true
               - column:
                   name: deleted_at
                   type: timestamp
-                  constraints:
-                    nullable: true

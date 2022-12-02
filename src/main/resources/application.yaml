@@ -1,0 +1,24 @@
+database:
+  name: quisell
+  username:
+  password:
+  host:
+  port: 5432
+
+psql:
+  user: postgres
+  password: pass
+  schema: public
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db/changelog/liquibase-changelog.yml
+    enabled: true
+    url: ${spring.datasource.url}
+  datasource:
+    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}?currentSchema=${psql.schema}&user=${psql.user}&password=${psql.password}
+    username:
+    password:

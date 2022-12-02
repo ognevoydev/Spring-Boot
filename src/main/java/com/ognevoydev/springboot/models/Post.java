@@ -1,16 +1,15 @@
 package com.ognevoydev.springboot.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name="posts")
 public class Post {
@@ -23,7 +22,7 @@ public class Post {
     String title;
     @Column(name="description", nullable = false)
     String description;
-    @Column(name="price", nullable = false)
+    @Column(name="price")
     Integer price;
     @Column(name="used", nullable = false)
     Boolean used;
