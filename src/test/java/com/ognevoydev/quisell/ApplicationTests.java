@@ -1,4 +1,4 @@
-package com.ognevoydev.springboot;
+package com.ognevoydev.quisell;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

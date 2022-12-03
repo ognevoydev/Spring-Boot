@@ -1,4 +1,4 @@
-package com.ognevoydev.springboot;
+package com.ognevoydev.quisell;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
