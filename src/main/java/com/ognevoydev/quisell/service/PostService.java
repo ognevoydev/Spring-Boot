@@ -8,6 +8,5 @@ import java.util.UUID;
 public interface PostService {
 
     List<Post> getAllPosts();
-    Post getPostById(UUID postId);
 
 }

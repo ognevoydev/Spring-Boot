@@ -2,26 +2,20 @@ package com.ognevoydev.quisell.service;
 
 import com.ognevoydev.quisell.model.Post;
 import com.ognevoydev.quisell.repo.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class PostServiceImpl implements PostService{
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
     @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll();
-    }
-
-    @Override
-    public Post getPostById(UUID postId) {
-        return null;
     }
 
 }
