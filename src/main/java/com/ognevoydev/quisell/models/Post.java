@@ -2,6 +2,8 @@ package com.ognevoydev.quisell.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -17,29 +19,30 @@ public class Post {
 
     @Id
     @GeneratedValue()
-    UUID id;
-    String title;
-    String description;
-    Integer price;
-    Boolean used;
-    String phone;
+    private UUID id;
+    private String title;
+    private String description;
+    private Integer price;
+    private Boolean used;
+    @CreationTimestamp
     @Column(name="created_at", nullable = false)
-    Instant createdAt;
+    private Instant createdAt;
+    @UpdateTimestamp
     @Column(name="updated_at")
-    Instant updatedAt;
+    private Instant updatedAt;
     @Column(name="deleted_at")
-    Instant deletedAt;
+    private Instant deletedAt;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return id.equals(post.id) && title.equals(post.title) && description.equals(post.description) && Objects.equals(price, post.price) && used.equals(post.used) && phone.equals(post.phone) && createdAt.equals(post.createdAt) && Objects.equals(updatedAt, post.updatedAt) && Objects.equals(deletedAt, post.deletedAt);
+        return id.equals(post.id) && title.equals(post.title) && description.equals(post.description) && Objects.equals(price, post.price) && used.equals(post.used) && createdAt.equals(post.createdAt) && Objects.equals(updatedAt, post.updatedAt) && Objects.equals(deletedAt, post.deletedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, price, used, phone, createdAt, updatedAt, deletedAt);
+        return Objects.hash(id, title, description, price, used, createdAt, updatedAt, deletedAt);
     }
 }

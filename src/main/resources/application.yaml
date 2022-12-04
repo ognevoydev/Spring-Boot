@@ -1,8 +1,8 @@
 database:
   name: quisell
-  username: postgres
-  password: postgres
-  host: localhost
+  username:
+  password:
+  host:
   port: 5432
 
 spring:
@@ -13,9 +13,9 @@ spring:
     change-log: classpath:db/changelog-master.yml
     enabled: true
     url: ${spring.datasource.url}
-    user: ${database.username}
-    password: ${database.password}
+    user: postgres
+    password: postgres
   datasource:
     url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
-    username: ${database.username}
-    password: ${database.password}
+    username: postgres
+    password: postgres
