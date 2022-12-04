@@ -1,4 +1,4 @@
-package com.ognevoydev.quisell.models;
+package com.ognevoydev.quisell.model;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -10,12 +10,12 @@ spring:
     hibernate:
       ddl-auto: none
   liquibase:
-    change-log: classpath:db/changelog-master.yml
+    change-log: classpath:db/changelog-master.xml
     enabled: true
     url: ${spring.datasource.url}
-    user: postgres
-    password: postgres
+    user: ${database.username}
+    password: ${database.username}
   datasource:
     url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
-    username: postgres
-    password: postgres
+    username: ${database.username}
+    password: ${database.username}
