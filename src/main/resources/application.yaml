@@ -1,0 +1,21 @@
+database:
+  name: quisell
+  username:
+  password:
+  host:
+  port: 5432
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db/changelog-master.xml
+    enabled: true
+    url: ${spring.datasource.url}
+    user: ${database.username}
+    password: ${database.username}
+  datasource:
+    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
+    username: ${database.username}
+    password: ${database.username}
