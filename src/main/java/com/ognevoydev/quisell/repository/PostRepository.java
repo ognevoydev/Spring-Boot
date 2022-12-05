@@ -1,4 +1,4 @@
-package com.ognevoydev.quisell.repo;
+package com.ognevoydev.quisell.repository;
 
 import com.ognevoydev.quisell.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
 package com.ognevoydev.quisell.service;
 
 import com.ognevoydev.quisell.model.Post;
-import com.ognevoydev.quisell.repo.PostRepository;
+import com.ognevoydev.quisell.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
