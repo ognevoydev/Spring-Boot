@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.UUID;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,6 +19,11 @@ public class PostController {
     @GetMapping("/{id}")
     public Post getPostById(@PathVariable(value = "id") UUID postId) {
         return postService.getPostById(postId);
+    }
+
+    @GetMapping
+    public List<Post> getAllPosts() {
+        return postService.getAllPosts();
     }
 
 }
