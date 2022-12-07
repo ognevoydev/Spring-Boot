@@ -1,6 +1,6 @@
 package com.ognevoydev.quisell.service;
 
-import com.ognevoydev.quisell.exception.NotFoundException;
+import com.ognevoydev.quisell.common.exception.NotFoundException;
 import com.ognevoydev.quisell.model.Post;
 import com.ognevoydev.quisell.repo.PostRepository;
 import lombok.RequiredArgsConstructor;
