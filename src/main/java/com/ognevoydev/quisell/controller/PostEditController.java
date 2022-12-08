@@ -10,19 +10,13 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/posts")
-public class PostController {
+public class PostEditController {
 
     private final PostService postService;
 
-    @GetMapping("/{id}")
-    public Post getPostById(@PathVariable(value = "id") UUID postId) {
-        return postService.getPostById(postId);
-    }
-
-    @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
+    @PostMapping("/new")
+    public void addPost(@RequestBody Post post) {
+        postService.savePost(post);
     }
 
 }

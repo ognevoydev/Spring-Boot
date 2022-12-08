@@ -33,6 +33,13 @@ public class Post {
     @Column(name="deleted_at")
     private Instant deletedAt;
 
+    public Post(String title, String description, Integer price, Boolean used) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.used = used;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

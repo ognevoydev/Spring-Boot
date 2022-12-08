@@ -25,4 +25,11 @@ public class PostServiceImpl implements PostService{
         return postRepository.findAll();
     }
 
+    @Override
+    public void savePost(Post post) {
+        UUID postId = UUID.randomUUID();
+        post.setId(postId);
+        postRepository.save(post);
+        }
+
 }
