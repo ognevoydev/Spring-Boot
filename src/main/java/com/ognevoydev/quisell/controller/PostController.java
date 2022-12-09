@@ -26,7 +26,6 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @Transactional
     @PostMapping
     public void addPost(@RequestBody Post post) {
         postService.savePost(post);
