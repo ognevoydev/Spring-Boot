@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 import com.ognevoydev.quisell.repository.PostRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,8 +23,16 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<Post> getAllPosts () {
         return postRepository.findAll();
     }
+
+    @Transactional
+    @Override
+    public void savePost(Post post) {
+        UUID accountId = UUID.randomUUID(); //TODO привязать аккаунт
+        post.setAccountId(accountId);
+        postRepository.save(post);
+        }
 
 }

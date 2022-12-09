@@ -20,12 +20,14 @@ public class Post {
     @Id
     @GeneratedValue()
     private UUID id;
+    @Column(name="account_id")
+    private UUID accountId;
     private String title;
     private String description;
     private Integer price;
     private Boolean used;
     @CreationTimestamp
-    @Column(name="created_at", nullable = false)
+    @Column(name="created_at")
     private Instant createdAt;
     @UpdateTimestamp
     @Column(name="updated_at")

@@ -8,5 +8,6 @@ public interface PostService {
 
     Post getPostById(UUID postId);
     List<Post> getAllPosts();
+    void savePost(Post post);
 
 }
