@@ -3,6 +3,7 @@ package com.ognevoydev.quisell.controller;
 import com.ognevoydev.quisell.model.Post;
 import com.ognevoydev.quisell.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,12 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
+    }
+
+    @Transactional
+    @PostMapping
+    public void addPost(@RequestBody Post post) {
+        postService.savePost(post);
     }
 
 }

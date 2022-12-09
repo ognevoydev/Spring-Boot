@@ -12,6 +12,9 @@
             <column name="id" type="uuid">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
+            <column name="account_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>

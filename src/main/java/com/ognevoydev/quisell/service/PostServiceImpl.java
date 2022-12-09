@@ -21,14 +21,14 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<Post> getAllPosts () {
         return postRepository.findAll();
     }
 
     @Override
     public void savePost(Post post) {
-        UUID postId = UUID.randomUUID();
-        post.setId(postId);
+        UUID accountId = UUID.randomUUID(); //TODO привязать аккаунт
+        post.setAccountId(accountId);
         postRepository.save(post);
         }
 

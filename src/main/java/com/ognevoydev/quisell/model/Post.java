@@ -20,6 +20,8 @@ public class Post {
     @Id
     @GeneratedValue()
     private UUID id;
+    @Column(name="account_id", nullable = false)
+    private UUID accountId;
     private String title;
     private String description;
     private Integer price;
@@ -32,13 +34,6 @@ public class Post {
     private Instant updatedAt;
     @Column(name="deleted_at")
     private Instant deletedAt;
-
-    public Post(String title, String description, Integer price, Boolean used) {
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.used = used;
-    }
 
     @Override
     public boolean equals(Object o) {
