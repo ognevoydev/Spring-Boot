@@ -1,5 +1,6 @@
 package com.ognevoydev.quisell.controller;
 
+import com.ognevoydev.quisell.common.exception.ForbiddenException;
 import com.ognevoydev.quisell.common.exception.HttpStatusException;
 import com.ognevoydev.quisell.common.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +13,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.Map;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @ControllerAdvice
 public class ExceptionControllerAdvice {
+
+    @ExceptionHandler(ForbiddenException.class)
+    protected ResponseEntity<?> handleForbiddenException(ForbiddenException exception) {
+        return handleException(exception, FORBIDDEN);
+    }
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<?> handleNotFoundException(NotFoundException exception) {
