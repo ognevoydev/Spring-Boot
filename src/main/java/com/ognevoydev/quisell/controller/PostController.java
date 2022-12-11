@@ -3,11 +3,11 @@ package com.ognevoydev.quisell.controller;
 import com.ognevoydev.quisell.model.Post;
 import com.ognevoydev.quisell.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,6 +24,19 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
+    }
+
+    @PostMapping
+    public void addPost(@RequestBody Post post) {
+        postService.savePost(post);
+    }
+
+    @PostMapping("/{id}/remove")
+    public void deletePost(@PathVariable(value = "id") UUID postId, Principal principal) {
+//TODO        String postAccountId = postService.getPostById(postId).getAccountId().toString();
+//        if(principal.toString().equals(postAccountId)){
+            postService.deletePostById(postId);
+//TODO        }
     }
 
 }
