@@ -1,6 +1,8 @@
 package com.ognevoydev.quisell.service;
 
 import com.ognevoydev.quisell.model.Post;
+
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,5 +12,6 @@ public interface PostService {
     List<Post> getAllPosts();
     void savePost(Post post);
     void deletePostById(UUID postId);
+    UUID findAccountIdById(UUID postId);
 
 }

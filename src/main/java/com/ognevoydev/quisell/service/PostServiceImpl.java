@@ -3,7 +3,6 @@ package com.ognevoydev.quisell.service;
 import com.ognevoydev.quisell.common.exception.NotFoundException;
 import com.ognevoydev.quisell.model.Post;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -20,15 +19,13 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post getPostById(UUID postId) {
-        Post post = postRepository.findById(postId)
+        return postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(postId, Post.class));
-        if(post.getDeletedAt() != null) throw new NotFoundException(postId, Post.class);
-        else return post;
     }
 
     @Override
     public List<Post> getAllPosts () {
-        return postRepository.findAllPosts();
+        return postRepository.findByDeletedAtIsNull();
     }
 
     @Transactional
@@ -42,10 +39,13 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void deletePostById(UUID postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new NotFoundException(postId, Post.class));
-        post.setDeletedAt(Instant.now());
-        postRepository.save(post);
+        int upd = postRepository.updPostDeletedAt(Instant.now(), postId);
+        if(upd < 1) throw new NotFoundException(postId, Post.class);
+    }
+
+    @Override
+    public UUID findAccountIdById(UUID postId) {
+        return postRepository.findAccountIdById(postId);
     }
 
 }
