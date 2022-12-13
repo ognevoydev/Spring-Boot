@@ -5,7 +5,9 @@ import com.ognevoydev.quisell.model.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 import com.ognevoydev.quisell.repository.PostRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +21,16 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post getPostById(UUID postId) {
+        //        return Optional.ofNullable(
+//                postRepository.findById(postId).orElseThrow(() ->
+//                        new NotFoundException(postId, Post.class)));
         return postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(postId, Post.class));
     }
 
     @Override
     public List<Post> getAllPosts () {
-        return postRepository.findByDeletedAtIsNull();
+        return postRepository.findActivePostsByDeletedAtIsNull();
     }
 
     @Transactional
@@ -44,8 +49,9 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public UUID findAccountIdById(UUID postId) {
-        return postRepository.findAccountIdById(postId);
+    public boolean checkAccessToPost(UUID postId, Principal principal) {
+        return postRepository.checkAccessToPost(postId, principal);
+
     }
 
 }

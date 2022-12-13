@@ -1,12 +1,14 @@
 package com.ognevoydev.quisell.controller;
 
 import com.ognevoydev.quisell.common.exception.HttpStatusException;
+import com.ognevoydev.quisell.common.exception.NotFoundException;
 import com.ognevoydev.quisell.model.Post;
 import com.ognevoydev.quisell.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
@@ -34,13 +36,16 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable(value = "id") UUID postId, Principal principal) {
-      String postAccountId = postService.findAccountIdById(postId).toString();
-        if(principal != null && principal.toString().equals(postAccountId)){
+        Optional<Post> post = Optional.ofNullable(postService.getPostById(postId));
+        post.orElseThrow(() -> new NotFoundException(postId, Post.class));
+
+        if(!postService.checkAccessToPost(postId, principal)) {
             postService.deletePostById(postId);
         }
         else {
             throw new HttpStatusException("Access to this resource on the server is denied", FORBIDDEN);
         }
+
     }
 
 }
