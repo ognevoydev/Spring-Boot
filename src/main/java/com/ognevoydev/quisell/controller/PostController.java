@@ -36,14 +36,17 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable(value = "id") UUID postId, Principal principal) {
-        Optional<Post> post = Optional.ofNullable(postService.getPostById(postId));
-        post.orElseThrow(() -> new NotFoundException(postId, Post.class));
-
-        if(!postService.checkAccessToPost(postId, principal)) {
-            postService.deletePostById(postId);
+        Optional<Boolean> ifOwner = postService.isPostOwner(postId, principal);
+        if(ifOwner.isPresent()) {
+            if(ifOwner.get()) {
+                postService.deletePostById(postId);
+            }
+            else {
+                throw new HttpStatusException("Access to this resource on the server is denied", FORBIDDEN);
+            }
         }
         else {
-            throw new HttpStatusException("Access to this resource on the server is denied", FORBIDDEN);
+            throw new NotFoundException(postId, Post.class);
         }
 
     }

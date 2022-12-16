@@ -21,9 +21,6 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post getPostById(UUID postId) {
-        //        return Optional.ofNullable(
-//                postRepository.findById(postId).orElseThrow(() ->
-//                        new NotFoundException(postId, Post.class)));
         return postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(postId, Post.class));
     }
@@ -44,13 +41,13 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void deletePostById(UUID postId) {
-        int upd = postRepository.updPostDeletedAt(Instant.now(), postId);
+        int upd = postRepository.setDeletedAt(Instant.now(), postId);
         if(upd < 1) throw new NotFoundException(postId, Post.class);
     }
 
     @Override
-    public boolean checkAccessToPost(UUID postId, Principal principal) {
-        return postRepository.checkAccessToPost(postId, principal);
+    public Optional<Boolean> isPostOwner(UUID postId, Principal principal) {
+        return postRepository.isPostOwner(postId, principal);
 
     }
 

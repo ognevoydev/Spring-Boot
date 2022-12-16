@@ -13,6 +13,6 @@ public interface PostService {
     List<Post> getAllPosts();
     void savePost(Post post);
     void deletePostById(UUID postId);
-    boolean checkAccessToPost(UUID postId, Principal principal);
+    Optional<Boolean> isPostOwner(UUID postId, Principal principal);
 
 }

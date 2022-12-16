@@ -4,7 +4,6 @@ import com.ognevoydev.quisell.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.security.Principal;
@@ -17,14 +16,17 @@ import java.util.UUID;
 public interface PostRepository extends JpaRepository<Post, UUID> {
 
     List<Post> findActivePostsByDeletedAtIsNull();
-    @Query(value = """
-            SELECT CAST(CASE
+@Query(value = """
+            SELECT CASE WHEN
+            (SELECT id FROM Post where id = :postId) IS NULL
+            THEN NULL
             WHEN (SELECT accountId FROM Post where id = :postId) = :principal
-            THEN 1 ELSE 0 END AS numeric_boolean) AS isAuthenticated
+            THEN 'TRUE'
+            ELSE 'FALSE' END AS active_status
             """)
-    boolean checkAccessToPost(@Param("postId") UUID postId, @Param("principal") Principal principal);
+    Optional<Boolean> isPostOwner(UUID postId, Principal principal);
     @Modifying
     @Query(value = "UPDATE Post SET deletedAt = :deletedAt where id = :postId")
-    int updPostDeletedAt(@Param("deletedAt") Instant deletedAt, @Param("postId") UUID postId);
+    int setDeletedAt(Instant deletedAt, UUID postId);
 
 }
