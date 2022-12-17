@@ -2,16 +2,14 @@ package com.ognevoydev.quisell.service;
 
 import com.ognevoydev.quisell.common.exception.NotFoundException;
 import com.ognevoydev.quisell.model.Post;
+import com.ognevoydev.quisell.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
-import java.time.Instant;
-import java.util.Optional;
-import java.util.UUID;
-import com.ognevoydev.quisell.repository.PostRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -41,13 +39,15 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void deletePostById(UUID postId) {
-        int upd = postRepository.setDeletedAt(Instant.now(), postId);
-        if(upd < 1) throw new NotFoundException(postId, Post.class);
+        if(postRepository.setDeletedAt(Instant.now(), postId) < 1)
+            throw new NotFoundException(postId, Post.class);
     }
 
     @Override
-    public Optional<Boolean> isPostOwner(UUID postId, Principal principal) {
-        return postRepository.isPostOwner(postId, principal);
+    public boolean isPostOwner(UUID postId, UUID accountId) {
+        return postRepository.isPostOwner(postId, accountId).orElseThrow(
+                () -> new NotFoundException(postId, Post.class)
+        );
 
     }
 
