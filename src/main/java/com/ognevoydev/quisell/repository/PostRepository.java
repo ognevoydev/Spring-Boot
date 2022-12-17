@@ -28,12 +28,4 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     @Modifying
     @Query(value = "UPDATE Post SET deletedAt = :deletedAt where id = :postId")
     int setDeletedAt(Instant deletedAt, UUID postId);
-    @Transactional //saving test post with custom fields
-    @Modifying
-    @Query(value = """
-            INSERT INTO Post (id, accountId, title, description, used, createdAt, updatedAt)
-            VALUES (:id, :accountId, :title, :description, :used, :createdAt, :updatedAt)
-            """)
-    void saveTestPost(UUID id, UUID accountId, String title, String description, boolean used, Instant createdAt, Instant updatedAt);
-
 }

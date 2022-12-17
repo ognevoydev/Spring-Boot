@@ -3,7 +3,6 @@ package com.ognevoydev.quisell.controller;
 import com.ognevoydev.quisell.common.exception.HttpStatusException;
 import com.ognevoydev.quisell.model.Post;
 import com.ognevoydev.quisell.service.PostService;
-import com.ognevoydev.quisell.utils.Mappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
@@ -36,7 +35,7 @@ public class PostController {
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable(value = "id") UUID postId, Principal principal) {
 
-        if(postService.isPostOwner(postId, Mappers.principalToUUID(principal))) {
+        if(postService.isPostOwner(postId, UUID.fromString(String.valueOf(principal)))) {
             postService.deletePostById(postId);
         }
         else {
