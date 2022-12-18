@@ -20,7 +20,7 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             SELECT CASE WHEN
             (SELECT id FROM Post WHERE id = :postId) IS NULL
             THEN NULL
-            WHEN (SELECT accountId FROM Post WHERE id = :postId) = :accountId
+            WHEN (SELECT accountId = :accountId FROM Post where id = :postId)
             THEN 'TRUE'
             ELSE 'FALSE' END AS active_status
             """)

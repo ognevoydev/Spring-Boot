@@ -8,7 +8,7 @@ database:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
   liquibase:
     change-log: classpath:db/changelog-master.xml
     enabled: true
