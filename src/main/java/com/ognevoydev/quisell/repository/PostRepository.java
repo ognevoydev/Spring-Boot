@@ -16,14 +16,7 @@ import java.util.UUID;
 public interface PostRepository extends JpaRepository<Post, UUID> {
 
     List<Post> findActivePostsByDeletedAtIsNull();
-@Query(value = """
-            SELECT CASE WHEN
-            (SELECT id FROM Post WHERE id = :postId) IS NULL
-            THEN NULL
-            WHEN (SELECT accountId = :accountId FROM Post where id = :postId)
-            THEN 'TRUE'
-            ELSE 'FALSE' END AS active_status
-            """)
+@Query(value = "SELECT accountId = :accountId FROM Post where id = :postId")
     Optional<Boolean> isPostOwner(UUID postId, UUID accountId);
     @Modifying
     @Query(value = "UPDATE Post SET deletedAt = :deletedAt where id = :postId")

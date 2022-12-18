@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,11 +30,9 @@ class PostServiceImplTest {
 
         assertThrows(HttpStatusException.class, () -> postService.deletePostById(UUID.randomUUID()));
 
-        List<Post> activePosts = postRepository.findActivePostsByDeletedAtIsNull();
-        UUID postToBeDeletedId = activePosts.get(0).getId();
-        postService.deletePostById(postToBeDeletedId);
+        postService.deletePostById(post.getId());
 
-        assertNotNull(postService.getPostById(postToBeDeletedId).getDeletedAt());
+        assertNotNull(postService.getPostById(post.getId()).getDeletedAt());
     }
 
     @Test
