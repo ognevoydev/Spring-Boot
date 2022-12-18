@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.Map;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @ControllerAdvice

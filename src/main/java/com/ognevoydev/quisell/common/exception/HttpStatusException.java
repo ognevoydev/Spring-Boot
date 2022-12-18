@@ -19,6 +19,8 @@ public class HttpStatusException extends RuntimeException {
         this.httpStatus = httpStatus;
     }
 
+
+
     public HttpStatusException(String message, HttpStatus httpStatus, Throwable cause) {
         super(message, cause);
         this.httpStatus = httpStatus;
