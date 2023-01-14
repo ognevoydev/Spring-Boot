@@ -14,21 +14,17 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
   keycloak:
-    image: jboss/keycloak:latest
+    container_name: quisell_keycloak
+    image: jboss/keycloak:16.1.1
+    restart: unless-stopped
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
-      DB_DATABASE: quisell
-      DB_USER: postgres
-      DB_SCHEMA: public
-      DB_PASSWORD: postgres
+      DB_VENDOR: h2
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
-      KEYCLOAK_LOGLEVEL: DEBUG
-      ROOT_LOGLEVEL: DEBUG
     ports:
-      - "8443:8443"
-    depends_on:
-      - postgres
+      - "8080:8080"
+    volumes:
+      - keycloak:/opt/jboss/keycloak/standalone/data
 volumes:
   db:
+  keycloak:
