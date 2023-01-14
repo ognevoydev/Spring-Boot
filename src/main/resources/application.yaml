@@ -23,4 +23,3 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-ui
-    packagesToScan: com.ognevoydev.quisell

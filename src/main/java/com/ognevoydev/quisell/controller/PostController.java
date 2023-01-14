@@ -6,6 +6,7 @@ import com.ognevoydev.quisell.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,7 @@ public class PostController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Получить объявление по id")
-    @ApiResponse(responseCode = "200", description = "Запрос выполнен успешно")
-    @ApiResponse(responseCode = "404", description = "Не найдено")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Post with id {id} was found"), @ApiResponse(responseCode = "404", description = "Post with id {id} not found")})
     public Post getPostById(
             @Parameter(description = "ID объявления")
             @PathVariable(value = "id") UUID postId) {
@@ -36,23 +36,21 @@ public class PostController {
 
     @GetMapping
     @Operation(summary = "Получить список всех активных объявлений")
-    @ApiResponse(responseCode = "200", description = "Запрос выполнен успешно")
+    @ApiResponse(responseCode = "200", description = "List of posts was found")
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @PostMapping
     @Operation(summary = "Создать объявление")
-    @ApiResponse(responseCode = "200", description = "Запрос выполнен успешно")
+    @ApiResponse(responseCode = "200", description = "Post was created")
     public void addPost(@RequestBody Post post) {
         postService.savePost(post);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить объявление по id")
-    @ApiResponse(responseCode = "200", description = "Запрос выполнен успешно")
-    @ApiResponse(responseCode = "403", description = "Доступ запрещён")
-    @ApiResponse(responseCode = "404", description = "Не найдено")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Post with id {id} was deleted"), @ApiResponse(responseCode = "403", description = "Forbidden"), @ApiResponse(responseCode = "404", description = "Post with id {id} not found")})
     public void deletePost(
             @Parameter(description = "ID объявления")
             @PathVariable(value = "id") UUID postId, Principal principal) {
