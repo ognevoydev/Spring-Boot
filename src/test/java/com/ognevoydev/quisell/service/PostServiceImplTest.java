@@ -1,16 +1,20 @@
 package com.ognevoydev.quisell.service;
 
 import com.ognevoydev.quisell.common.exception.HttpStatusException;
-import com.ognevoydev.quisell.model.Post;
+import com.ognevoydev.quisell.model.dto.PostUpdateDTO;
+import com.ognevoydev.quisell.model.entity.Post;
+import com.ognevoydev.quisell.model.mapper.PostMapper;
 import com.ognevoydev.quisell.repository.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
+@ActiveProfiles("test")
 class PostServiceImplTest {
 
     @Autowired
@@ -18,6 +22,9 @@ class PostServiceImplTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private PostMapper postMapper;
 
     @Test
     void deletePostById() {
@@ -47,5 +54,25 @@ class PostServiceImplTest {
         assertTrue(postService.isPostOwner(post.getId(), post.getAccountId()));
         assertFalse(postService.isPostOwner(post.getId(), UUID.randomUUID()));
         assertThrows(HttpStatusException.class, () -> postService.isPostOwner(UUID.randomUUID(), post.getAccountId()));
+    }
+
+    @Test
+    void updatePostById() {
+        Post expected = new Post();
+        expected.setTitle("Foo");
+        expected.setDescription("Foo");
+        expected.setPrice(200);
+        expected.setUsed(false);
+
+        postService.savePost(expected);
+
+        PostUpdateDTO updateDTO = new PostUpdateDTO(expected.getTitle(), expected.getDescription(), 100, true);
+        postMapper.updatePost(expected, updateDTO);
+        postService.updatePost(expected);
+
+        Post actual = postService.getPostById(expected.getId());
+        expected.setUpdatedAt(actual.getUpdatedAt());
+
+        assertEquals(expected, actual);
     }
 }

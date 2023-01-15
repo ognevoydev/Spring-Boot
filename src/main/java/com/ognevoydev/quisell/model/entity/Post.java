@@ -1,10 +1,11 @@
-package com.ognevoydev.quisell.model;
+package com.ognevoydev.quisell.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -27,12 +28,12 @@ public class Post {
     private Boolean used;
     @CreationTimestamp
     @Column(name="created_at")
-    private Instant createdAt;
+    private Date createdAt;
     @UpdateTimestamp
     @Column(name="updated_at")
-    private Instant updatedAt;
+    private Date updatedAt;
     @Column(name="deleted_at")
-    private Instant deletedAt;
+    private Date deletedAt;
 
     @Override
     public boolean equals(Object o) {
