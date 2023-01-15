@@ -1,3 +1,6 @@
+server:
+  port: 80
+
 database:
   name: quisell
   username:
@@ -19,3 +22,7 @@ spring:
     url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
     username: ${database.username}
     password: ${database.username}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
