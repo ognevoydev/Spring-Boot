@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,5 +75,49 @@ class PostServiceImplTest {
         expected.setUpdatedAt(actual.getUpdatedAt());
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPostById() {
+        Post post = new Post();
+        post.setTitle("Foo");
+        post.setDescription("Foo");
+        post.setUsed(false);
+
+        postService.savePost(post);
+        Post found = postService.getPostById(post.getId());
+
+        assertThrows(HttpStatusException.class, () -> postService.getPostById(UUID.randomUUID()));
+        assertNotNull(postService.getPostById(post.getId()));
+        assertEquals(post, found);
+    }
+
+    @Test
+        void getAllPosts() {
+        assertFalse(postService.getAllPosts().isEmpty());
+
+        Post post = new Post();
+        post.setTitle("Foo");
+        post.setDescription("Foo");
+        post.setUsed(false);
+
+        postService.savePost(post);
+        List<Post> posts = postService.getAllPosts();
+
+        assertNotNull(posts);
+        assertTrue(posts.contains(post));
+        assertTrue(posts.stream().allMatch(p -> p.getDeletedAt() == null));
+    }
+
+    @Test
+    void savePost() {
+        Post post = new Post();
+        post.setTitle("Foo");
+        post.setDescription("Foo");
+        post.setUsed(false);
+
+        postService.savePost(post);
+
+        assertEquals(post, postService.getPostById(post.getId()));
     }
 }
