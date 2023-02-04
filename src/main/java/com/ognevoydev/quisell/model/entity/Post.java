@@ -30,10 +30,16 @@ public class Post {
     @Column(name="created_at")
     private Date createdAt;
     @UpdateTimestamp
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private Date updatedAt;
-    @Column(name="deleted_at")
+    @Column(name = "deleted_at")
     private Date deletedAt;
+
+    public Post(String title, String description, Boolean used) {
+        this.title = title;
+        this.description = description;
+        this.used = used;
+    }
 
     @Override
     public boolean equals(Object o) {
