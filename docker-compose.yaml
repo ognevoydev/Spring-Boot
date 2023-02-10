@@ -21,10 +21,12 @@ services:
       DB_VENDOR: h2
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/standalone/imports/realm-export.json
     ports:
       - "8080:8080"
     volumes:
       - keycloak:/opt/jboss/keycloak/standalone/data
+      - .keycloak/realm-export.json:/opt/jboss/keycloak/standalone/imports/realm-export.json
 volumes:
   db:
   keycloak:
