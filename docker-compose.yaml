@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: quisell_postgres
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=quisell
+      - PG_DATA=/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+  keycloak:
+    container_name: quisell_keycloak
+    image: jboss/keycloak:16.1.1
+    restart: unless-stopped
+    environment:
+      DB_VENDOR: h2
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+    ports:
+      - "8080:8080"
+    volumes:
+      - keycloak:/opt/jboss/keycloak/standalone/data
+volumes:
+  db:
+  keycloak:
